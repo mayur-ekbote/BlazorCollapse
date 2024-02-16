@@ -1,0 +1,25 @@
+﻿@if (!CollapseState.IsCollapsed)
+{
+    <div class="text-success">This is expanded content</div>
+    <button class="btn btn-sm" @onclick="@(()=>CollapseState.Toggle(this))">Click to Collapse From Child</button>
+}
+
+@code {
+
+    [Parameter]
+    [EditorRequired]
+    public CollapseState CollapseState { get; set; }
+
+    protected override void OnInitialized()
+    {
+        CollapseState.OnToggle += OnStateChanged;
+    }
+
+    async void OnStateChanged(object sender)
+    {
+        if (sender != this)
+        {
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+}

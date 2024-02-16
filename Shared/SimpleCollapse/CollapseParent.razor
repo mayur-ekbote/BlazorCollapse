@@ -1,0 +1,32 @@
+﻿
+<div class="d-flex flex-column align-items-start border border-dark gap-3">
+    <div class="d-flex gap-3 pb-2">
+        <h3>Collapse Parent</h3>
+        <button class="btn btn-sm btn-primary"  @onclick="ClickButton">Click to Collapse From Parent</button>
+    </div>
+    <div class="@(collapseState.IsCollapsed ? "text-bg-danger" :"text-bg-success" ) pb-2">
+        The Current State of @nameof(CollapseState.IsCollapsed) as seen by the parent is : @collapseState.IsCollapsed
+    </div>
+    <div class="text-bg-dark">
+        Above will *NOT* change if you collapse from the child
+    </div>
+</div>
+
+<div class="border">
+    <CollapseChild CollapseState="@collapseState"></CollapseChild>
+</div>
+
+
+
+@code {
+
+    CollapseState collapseState;
+    protected override void OnInitialized()
+    {
+        collapseState = new CollapseState();
+    }
+    void ClickButton()
+    {
+        collapseState.Toggle(this);
+    }
+}
